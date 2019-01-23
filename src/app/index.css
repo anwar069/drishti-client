@@ -1,0 +1,37 @@
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+.thumbnail {
+  height: 200px;
+}
+
+.thumbnail img.pull-right {
+  width: 50px;
+}
+
+.list-group-item.action-list-item{
+  padding: 0px;
+  border: 0px;
+}
+hr{
+  border: 1px;
+}
+[data-letters]:before {
+  content:attr(data-letters);
+  display:inline-block;
+  font-size:1em;
+  width:2.5em;
+  height:2.5em;
+  line-height:2.5em;
+  text-align:center;
+  border-radius:50%;
+  border: 3px solid gray;
+  background:white;
+  vertical-align:middle;
+  margin-right:1em;
+  color:gray;
+  }

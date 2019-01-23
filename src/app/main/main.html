@@ -1,0 +1,168 @@
+<div class="container-fluid">
+  <br/>
+
+  <div ng-hide="main.actions.data.length">
+    <br/>
+    <br/>
+    <br/>
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <uib-progressbar class="progress-striped active" max="max" value="100">
+        <span style="color:white; white-space:nowrap;">Loading restaurant data..</span>
+      </uib-progressbar>
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
+
+  <div class="row" ng-show="main.actions.data.length">
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-4">
+          <h5 class="text-center">
+            {{main.actions.totalDuration}}
+          </h5>
+          <h6 class="text-center">Duration</h6>
+        </div>
+        <div class="col-sm-4">
+          <h5 class="text-center">
+            {{main.actions.avgDuration}}
+          </h5>
+          <h6 class="text-center">Avg. duration</h6>
+        </div>
+        <div class="col-sm-4">
+          <h5 class="text-center">
+            {{main.actions.actionCount}}
+          </h5>
+          <h6 class="text-center">Total count</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h3>Dishes</h3>
+          <canvas id="doughnut" height="130" width="130" chart-options="main.options" class="chart chart-doughnut" chart-data="main.dishdata"
+            chart-labels="main.dishlabels">
+          </canvas>
+        </div>
+        <div class="col-sm-6">
+          <h3>Actions</h3>
+          <canvas id="doughnut" height="130" width="130" chart-options="main.options" class="chart chart-doughnut" chart-data="main.actiondata"
+            chart-labels="main.actionlabels">
+          </canvas>
+        </div>
+        <div class="col-sm-6">
+          <h3>Stations</h3>
+          <canvas id="doughnut" height="130" width="130" chart-options="main.options" class="chart chart-doughnut" chart-data="main.stationdata"
+            chart-labels="main.stationlabels">
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-4">
+          <h5 class="text-center">
+            Action
+          </h5>
+          <p class="text-center">
+            <select ng-change="main.onFilterChange()" ng-options="item as item for item in main.actionFilters" ng-model="main.selectedAction"></select>
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <h5 class="text-center">
+            Dish
+          </h5>
+          <p class="text-center">
+            <select ng-change="main.onFilterChange()" ng-options="item as item for item in main.dishFilters" ng-model="main.selectedDish"></select>
+        </div>
+        <div class="col-sm-4">
+          <h5 class="text-center">
+            Station
+          </h5>
+          <p class="text-center">
+            <select ng-change="main.onFilterChange()" ng-options="item as item for item in main.stationFilters" ng-model="main.selectedStation"></select>
+        </div>
+        <hr>
+      </div>
+      <div class="list-group">
+        <div ng-repeat="row in main.actionData.slice(((main.currentPage-1)*main.itemsPerPage), ((main.currentPage)*main.itemsPerPage))">
+          <div class="col-sm-2">
+            <h2 data-letters="{{row.action[0]|uppercase}}"></h2>
+          </div>
+          <div class="col-sm-10">
+            <a class="list-group-item action-list-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h3 class="mb-1">{{row.action}}</h3>
+                <!-- <small>3 days ago</small> -->
+              </div>
+              <p class="mb-1">
+                <span class="glyphicon  glyphicon-cutlery" aria-hidden="true"></span>
+                {{row.dish}}
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                {{row.station}}</p>
+              <p class="mb-1">
+                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                {{row.duration}}
+
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                {{row.startTime}}</p>
+              <!-- <small>Donec id elit non mi porta.</small> -->
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- <table class="table">
+        <tr ng-repeat="row in main.actions.data.slice(((main.currentPage-1)*main.itemsPerPage), ((main.currentPage)*main.itemsPerPage))">
+          <h3>{{row.action}}</h3>
+          <td>{{row.dish}}</td>
+          <td>{{row.station}}</td>
+        </tr>
+      </table> -->
+      <!-- View
+      <select ng-model="main.viewby" ng-change="setItemsPerPage(main.viewby)">
+        <option>3</option>
+        <option>5</option>
+        <option>10</option>
+        <option>20</option>
+        <option>30</option>
+        <option>40</option>
+        <option>50</option>
+      </select> records at a time. -->
+
+      <uib-pagination total-items="main.actionData.length" ng-model="main.currentPage" max-size="main.maxSize" boundary-links="true"
+        rotate="false" num-pages="numPages" ng-change="main.pageChanged()" class="pagination-sm" items-per-page="main.itemsPerPage"></uib-pagination>
+    </div>
+  </div>
+  <!-- <div>
+    <acme-navbar creation-date="main.creationDate"></acme-navbar>
+  </div> -->
+
+  <!-- <div class="jumbotron text-center">
+    <h1>'Allo, 'Allo!</h1>
+    <p class="lead">
+      <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
+      Always a pleasure scaffolding your apps.
+    </p>
+    <p class="animated infinite" ng-class="main.classAnimation">
+      <button type="button" class="btn btn-lg btn-success" ng-click="main.showToastr()">Splendid Toastr</button>
+    </p>
+    <p>
+      With ♥ thanks to the contributions of<acme-malarkey extra-values="['Yeoman', 'Gulp', 'Angular']"></acme-malarkey>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-4" ng-repeat="awesomeThing in main.awesomeThings | orderBy:'rank'">
+      <div class="thumbnail">
+        <img class="pull-right" ng-src="assets/images/{{ awesomeThing.logo }}" alt="{{ awesomeThing.title }}">
+        <div class="caption">
+          <h3>{{ awesomeThing.title }}</h3>
+          <p>{{ awesomeThing.description }}</p>
+          <p><a ng-href="{{awesomeThing.url}}">{{ awesomeThing.url }}</a></p>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+</div>
